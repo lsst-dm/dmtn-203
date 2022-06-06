@@ -113,6 +113,7 @@ InfluxDB 2.x supports new `visualization types`_ like scatter plots, histograms,
 .. _Flux query language: https://docs.influxdata.com/flux/latest/get-started/
 
 Tract/patch metrics are currently supported, although the time associated with such a metric must be solely the time of calculation.
+There is also an additional time that can be derived from the software version itself.
 
 The advantages of using Sasquatch are that InfluxDB and Chronograph are already optimized to support very large time-series datasets and also support query systems that allow metrics to be retrieved quickly into a Jupyter notebook using the EFD client software.
 
