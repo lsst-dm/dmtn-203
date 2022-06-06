@@ -93,9 +93,10 @@ There are some ways by which the metrics tracking system can be improved.
 Sasquatch
 =========
 
-The Sasquatch system :cite:`SQR-068` is a metrics-tracking system fully integrated into the EFD.
+Sasquatch :cite:`SQR-068` is the next generation of the SQuaSH and EFD systems, a unified service to store and analyze telemetry, events, and metrics for Rubin Observatory.
 The current design allows for metrics to be loaded that can track the dataset type, processing run, and dataId.
-Sasquatch is a time-series database and has been used by the Data Management teacm to track how metrics evolve with changes to software versions.
+Sasquatch is based on InfluxDB, a time-series database that has been used by the Data Management team to track how metrics evolve with changes to software versions.
+The current design allows for metrics to be loaded with associated metadata such as dataset type, processing run, and dataId.
 
 In the context of an operational observatory, it will be necessary for metrics to be associated with the time of observation so that it will be possible to correlate telemetry from the EFD with metrics (for example plotting measured seeing against wind speed).
 
@@ -103,8 +104,13 @@ Each (exposure-based) metric stored in the butler repository will have two usefu
 The first is the timestamp of the original observation and the second is the time the metric was calculated.
 Additionally, the software version and other provenance information can be useful.
 
-Sasquatch does not currently support two timestamps but InfluxDB 2.0 can support this.
-The system can not convert a ``visit`` or ``exposure`` entry into a time, so the code that migrates Butler metrics into Sasquatch must extract the relevant time-of-observation from the dimension record attached to the data coordinate.
+Sasquatch should not be responsible for finding the time of observation for a visit or exposure, this timestamp will be obtained by the code that sends the Butler metrics to Sasquatch and added as metadata.
+Sasquatch can use that timestamp to index the metrics database to allow correlations with the EFD data.
+In addition, the timestamp of the metric calculation is going to be recorded as another field in InfluxDB and can also be used as the time axis for visualizations in Chronograf dashboards if needed. This is already possible using the `Flux query language`_ in InfluxDB 1.x.
+InfluxDB 2.x supports new `visualization types`_ like scatter plots, histograms, and heatmaps that can also be useful.
+
+.. _visualization types: https://docs.influxdata.com/influxdb/latest/visualize-data/visualization-types/
+.. _Flux query language: https://docs.influxdata.com/flux/latest/get-started/
 
 Tract/patch metrics are currently supported, although the time associated with such a metric must be solely the time of calculation.
 
