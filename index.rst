@@ -64,6 +64,14 @@ From a pipeline execution perspective having tasks generate individual metrics i
 The problem, though, is that with a large data release there are tens of thousands of metrics created and each one is a tiny file in an object store.
 This makes it almost impossible for the verification and validation team to read more than a few hundred into an analysis notebook.
 
+Summit Operations vs Data Production
+====================================
+
+There are many parts of the observatory interested in metrics.
+The Data Production department and verification team needs to be able to analyze the millions of metrics created for a data release.
+The System Performance team needs to look at trending data across the history of the observatory, correlating metric changes with all the summit systems and integrating into the EFD.
+The summit operations team need to get real time feedback from ongoing observations (from the camera diagnostic cluster, OCPS, and prompt processing) to determine whether science or calibration observations are being taken correctly and to be warned if problems are occurring as quickly as possible.
+
 Butler Datasets
 ===============
 
