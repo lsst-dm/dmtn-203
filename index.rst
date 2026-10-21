@@ -6,6 +6,16 @@ Tracking Metrics in Butler
 
    Many algorithms produce scalar metric values describing data quality. Storing those efficiently in butler is extremely important and in some cases being able to include the metrics in graph building is also required. This technote will explore how metrics can be handled efficiently.
 
+Document Status
+===============
+
+This document describes the situation in 2022.
+``faro`` has been replaced by ``analysis_tools`` :cite:`DMTN-314` and we included a ``SasquatchDatastore`` in 2023 that can do write-only pushes of metrics to Sasquatch (one of the options defined below).
+There is as yet no way to perform graph builds constrained by metrics, although that likely would be implemented today by first querying ConsDB :cite:`DMTN-227` for a list of matching exposure IDs and then using those as inputs to the graph build.
+
+Introduction
+============
+
 Pipelines often generate scalar quantities as part of processing.
 These metrics, for example those from ``faro`` :cite:`DMTN-211`, can include items such as the time an algorithm takes to execute, the number of sources in the image, or assessments of image quality.
 The metrics are, currently, treated as datasets by the butler in just the same way as source catalogs or processed images:
